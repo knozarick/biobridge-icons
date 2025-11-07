@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Biobridge Icons</title>
+  <style>
+    body { font:14px/1.4 system-ui, Arial; margin:12px; }
+    .row { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+    input { flex:1; min-width:220px; padding:8px; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .card { border:1px solid #eee; padding:8px; border-radius:8px; text-align:center; }
+    .icon { width:28px; height:28px; display:block; margin:8px auto; }
+    button { padding:6px 8px; cursor:pointer; }
+    .chip { border:1px solid #ddd; border-radius:6px; padding:4px 6px; cursor:pointer; }
+    small { color:#666; display:block; margin:6px 0 10px; }
+  </style>
+</head>
+<body>
+  <h3>Biobridge Icons</h3>
+  <div class="row"><input id="q" placeholder="Search icons (e.g., arrow, chart, brain)" /></div>
+  <div class="row" id="colors">
+    <span class="chip" data-hex="#233542">Gunmetal</span>
+    <span class="chip" data-hex="#7BA4C8">Calm Blue</span>
+    <span class="chip" data-hex="#C5C5C5">Silver</span>
+    <span class="chip" data-hex="#FCF0D3">Papaya</span>
+    <span class="chip" data-hex="#3C817B">Myrtle</span>
+  </div>
+  <small>Choose a color → Copy SVG → paste in slide → right-click “Convert to Shape”.</small>
+  <div class="grid" id="grid"></div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    const q = document.getElementById('q');
+    const grid = document.getElementById('grid');
+    let currentColor = '#233542';
+    const colors = document.getElementById('colors');
+    colors.addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      currentColor = chip.dataset.hex;
+      render(q.value.trim().toLowerCase());
+    });
+
+    function render(filter='') {
+      grid.innerHTML = '';
+      const names = Object.keys(lucide.icons).filter(n => n.includes(filter)).slice(0, 200);
+      for (const name of names) {
+        const svg = lucide.icons[name].toSvg({stroke: currentColor, 'stroke-width': 2, fill: 'none', width: 32, height: 32});
+        const card = document.createElement('div');
+        card.className='card';
+        card.innerHTML = `<div class="icon">${svg}</div><small>${name}</small><button data-copy="${name}">Copy SVG</button>`;
+        grid.appendChild(card);
+      }
+    }
+
+    grid.addEventListener('click', async e => {
+      if (e.target.dataset.copy) {
+        const svg = lucide.icons[e.target.dataset.copy].toSvg({stroke: currentColor,'stroke-width':2,fill:'none',width:32,height:32});
+        await navigator.clipboard.writeText(svg);
+        e.target.textContent='Copied!';
+        setTimeout(()=>e.target.textContent='Copy SVG',900);
+      }
+    });
+
+    q.addEventListener('input',()=>render(q.value.trim().toLowerCase()));
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:type="TaskPaneApp"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  Version="1.0.0.0" ProviderName="Biobridge" DefaultLocale="en-US"
+  Id="d6a7c9a4-2f62-4c0e-9c99-biobridge-icons-0001"
+  Title="Biobridge Icons"
+  Description="Search and copy Lucide icons in Biobridge brand colors.">
+  <Hosts><Host Name="Presentation"/></Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://knozarick.github.io/Biobridge-Icons/public/index.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides Version="1.0" xsi:type="ov:VersionOverrides">
+    <ov:Hosts>
+      <ov:Host xsi:type="ov:Presentation">
+        <ov:DesktopFormFactor>
+          <ov:FunctionFile resid="funcUrl"/>
+          <ov:ExtensionPoint xsi:type="ov:PrimaryCommandSurface">
+            <ov:OfficeTab id="TabHome">
+              <ov:Group id="BiobridgeGroup" label="Biobridge">
+                <ov:Control xsi:type="ov:Button" id="BiobridgeIconsBtn"
+                            label="Biobridge Icons"
+                            screentip="Open Biobridge Icons"
+                            supertip="Browse and copy Lucide icons in Biobridge colors"
+                            icon="https://knozarick.github.io/Biobridge-Icons/public/icon-32.png"
+                            onAction="onOpenTaskPane"/>
+              </ov:Group>
+            </ov:OfficeTab>
+          </ov:ExtensionPoint>
+        </ov:DesktopFormFactor>
+      </ov:Host>
+    </ov:Hosts>
+    <ov:Resources>
+      <ov:Urls>
+        <ov:Url id="funcUrl" DefaultValue="https://knozarick.github.io/Biobridge-Icons/public/function-file.js"/>
+      </ov:Urls>
+    </ov:Resources>
+  </VersionOverrides>
+</OfficeApp>
